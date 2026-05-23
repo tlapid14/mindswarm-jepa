@@ -23,9 +23,9 @@ A research-engineering prototype that asks a focused question: **can a
 JEPA-style latent future predictor warn of network fragmentation more
 reliably than a standard recurrent classifier?**
 
-MindSwarm simulates a multi-agent coordination environment — mobile agents, a
-backbone of relay nodes, abstract signal disruption, and delayed observations —
-and trains two models to predict imminent communication-graph failure from a
+MindSwarm simulates a multi-agent coordination environment with mobile agents, a
+backbone of relay nodes, abstract signal disruption, and delayed observations, which
+trains two models to predict imminent communication-graph failure from a
 short window of stale observations. A JEPA-inspired model that predicts a
 *future latent representation* is compared head-to-head against a direct LSTM
 sequence classifier under matched capacity and training budgets.
@@ -51,7 +51,7 @@ this prototype investigates:
 A [JEPA](https://ai.meta.com/blog/yann-lecun-ai-model-i-jepa/) (Joint-Embedding
 Predictive Architecture) predicts the *representation* of future inputs rather
 than reconstructing the inputs themselves. The hypothesis is that forcing the
-model to anticipate where the system is heading — in latent space — yields a
+model to anticipate where the system is heading in latent space yields a
 state representation that carries more predictive signal than one trained only
 to label the present.
 
@@ -168,12 +168,12 @@ slightly better recall and calibration (lower ECE). The JEPA model also reaches
 a latent future-prediction MSE of **0.0290**.
 
 These are preliminary, single-seed numbers, but they show the JEPA-style
-future-latent objective is competitive with — and modestly stronger than — a
+future-latent objective is competitive with, and modestly stronger than, a
 direct recurrent classifier on this simulated early-warning task.
 
 ## Project status
 
-**v1 — complete.** The end-to-end pipeline runs: simulation → dataset →
+**v1 complete.** The end-to-end pipeline runs: simulation → dataset →
 training (both models) → evaluation → live demo. The core experiment is
 implemented, results are reproducible from the seeded scripts, and the project
 is documented for review. Future work is tracked in the roadmap below rather
@@ -197,7 +197,7 @@ This is an honest scoping of what the prototype does and does not claim.
 
 ## Roadmap
 
-Realistic, scoped next steps — in rough priority order:
+Scoped next steps in rough priority order:
 
 1. **Early-warning lead-time metric.** Measure *how many steps ahead* of failure
    each model first crosses a risk threshold. This directly tests the
@@ -205,7 +205,7 @@ Realistic, scoped next steps — in rough priority order:
 2. **Ablations and multi-seed runs.** Vary the BCE weight λ, latent dimension,
    and observation latency; report mean ± std across seeds.
 3. **Visual JEPA.** Move from engineered state vectors to frame-based inputs so
-   the model has to learn its own representation — the setting where JEPA-style
+   the model has to learn its own representation, the setting where JEPA-style
    objectives are expected to matter most.
 4. **Higher-fidelity environment.** Port the abstract simulator toward a
    physics-based setting (e.g. PyBullet or Isaac Sim) to test whether the

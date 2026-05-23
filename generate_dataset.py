@@ -72,6 +72,21 @@ def _extract_samples(
     return X_past, X_future, y
 
 
+def _split_episode_ids(n_episodes: int, val_frac: float, seed: int) -> set[int]:
+    """Episode indices held out for validation.
+
+    The split is on whole episodes, not windows, so no temporally
+    correlated window can land in both train and val. The returned set is
+    the validation episodes; its complement (over range(n_episodes)) is
+    train. Seeded, so the split is reproducible.
+    """
+    rng = np.random.default_rng(seed)
+    ep_order = np.arange(n_episodes)
+    rng.shuffle(ep_order)
+    n_val_eps = int(round(n_episodes * val_frac))
+    return {int(e) for e in ep_order[:n_val_eps]}
+
+
 def _save_split(
     path: Path,
     X_past: np.ndarray,
@@ -124,12 +139,10 @@ def _main() -> None:
                   f"{rate:5.1f} ep/s  "
                   f"failure_rate so far: {so_far:.2%}")
 
-    # Episode-level split: shuffle episode indices, hold out val_frac.
-    rng = np.random.default_rng(args.seed)
-    ep_order = np.arange(args.n_episodes)
-    rng.shuffle(ep_order)
-    n_val_eps = int(round(args.n_episodes * args.val_frac))
-    val_episode_ids = set(int(e) for e in ep_order[:n_val_eps])
+    # Episode-level split: hold out val_frac of EPISODES (not windows).
+    val_episode_ids = _split_episode_ids(
+        args.n_episodes, args.val_frac, args.seed
+    )
     is_val = np.fromiter(
         (eid in val_episode_ids for eid in episode_id),
         dtype=bool,

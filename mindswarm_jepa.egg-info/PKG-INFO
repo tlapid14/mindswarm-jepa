@@ -1,3 +1,22 @@
+Metadata-Version: 2.4
+Name: mindswarm-jepa
+Version: 0.1.0
+Summary: JEPA-style latent future prediction for early warning of network fragmentation in a simulated multi-agent environment.
+Author: Tomer Lapid
+License: MIT
+Keywords: jepa,world-model,multi-agent,pytorch,early-warning
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: torch>=2.0
+Requires-Dist: numpy>=1.24
+Requires-Dist: matplotlib>=3.7
+Requires-Dist: pygame>=2.5
+Provides-Extra: dev
+Requires-Dist: pytest>=7.0; extra == "dev"
+Requires-Dist: ruff>=0.6; extra == "dev"
+Dynamic: license-file
+
 # MindSwarm JEPA
 
 A research-engineering prototype that asks a focused question: **can a

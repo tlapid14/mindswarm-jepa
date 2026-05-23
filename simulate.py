@@ -53,7 +53,6 @@ from config import (
 )
 from network import (
     GraphState,
-    HOPS_DISCONNECTED,
     build_graph_state,
     is_failure_sustained,
     _jam_intensity_at,
@@ -393,7 +392,7 @@ class Renderer:
     def _draw_blues(
         self, blue_pos: np.ndarray, connected: np.ndarray
     ) -> None:
-        for p, alive in zip(blue_pos, connected):
+        for p, alive in zip(blue_pos, connected, strict=True):
             color = COLOR_BLUE if bool(alive) else COLOR_BLUE_DISCONNECTED
             self._pg.draw.circle(
                 self._screen, color, (int(p[0]), int(p[1])), 6

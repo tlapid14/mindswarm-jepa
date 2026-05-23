@@ -1,0 +1,54 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mindswarm-jepa"
+version = "0.1.0"
+description = "JEPA-style latent future prediction for early warning of network fragmentation in a simulated multi-agent environment."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Tomer Lapid" }]
+keywords = ["jepa", "world-model", "multi-agent", "pytorch", "early-warning"]
+dependencies = [
+    "torch>=2.0",
+    "numpy>=1.24",
+    "matplotlib>=3.7",
+    "pygame>=2.5",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7.0", "ruff>=0.6"]
+
+# Flat-module layout: the project is a set of scripts, not a package tree.
+[tool.setuptools]
+py-modules = [
+    "config",
+    "data",
+    "models",
+    "network",
+    "simulate",
+    "generate_dataset",
+    "train_jepa",
+    "train_baseline",
+    "evaluate",
+    "demo",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+# Put the repo root on sys.path so tests can `import config`, `import models`, etc.
+pythonpath = ["."]
+
+[tool.ruff]
+line-length = 88
+target-version = "py310"
+
+# Ruff is used as a linter for real-bug classes (pyflakes + bugbear + import
+# and syntax errors), not as a formatter. The source uses deliberate column
+# alignment, so whitespace/line-length style rules (E1/E2/E5) and `ruff format`
+# are intentionally not enforced.
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "B"]

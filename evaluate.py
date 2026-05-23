@@ -318,7 +318,7 @@ def _main() -> None:
         jepa_ckpt["history"], baseline_ckpt["history"], curve_path
     )
     print()
-    print(f"plots saved:")
+    print("plots saved:")
     print(f"  {cal_path}")
     print(f"  {bar_path}")
     print(f"  {curve_path}")
